@@ -1,0 +1,96 @@
+<?php
+// Módulo de gestión de sesión y barra lateral
+$dashboardModule = (function () {
+    session_start();
+
+    // Función para verificar la sesión del usuario
+    function verificarSesion() {
+        if ($_SESSION["s_usuario"] === null) {
+            header("Location: ../index.php");
+            exit(); // Salir del script después de redireccionar
+        }
+    }
+
+    // Función para generar la barra lateral
+    function generarBarraLateral() {
+        echo '
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Sistema de Administracion <sup></sup></div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Interfaz Principal</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Opciones
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Ver Opciones</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="#">Carnet y QR</a>
+                </div>
+            </div>
+        </li>
+        ';
+    }
+
+    return [
+        'verificarSesion' => verificarSesion,
+        'generarBarraLateral' => generarBarraLateral,
+    ];
+})();
+
+// Utiliza las funciones del módulo
+$dashboardModule['verificarSesion']();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- ... -->
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <?php $dashboardModule['generarBarraLateral'](); ?>
+      <!-- ... -->
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- ... -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+</body>
+
+</html>
